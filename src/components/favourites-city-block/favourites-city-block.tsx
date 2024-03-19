@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import CityCard from '../city-card/city-card';
+import CityCard from '../offer-card/offer-card';
 
 type FavouritesCityBlockProps = {
   city: string;

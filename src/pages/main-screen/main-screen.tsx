@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import CityCardList from '../../components/city-card-list/city-card-list';
+import CityCardList from '../../components/offers-card-list/offers-card-list';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {

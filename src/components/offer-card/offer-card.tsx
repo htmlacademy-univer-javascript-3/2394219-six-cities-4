@@ -5,7 +5,7 @@ type CityCardProps = {
   cardInfo: Offer;
 };
 
-function CityCard({ cardInfo }: CityCardProps): JSX.Element {
+function OfferCard({ cardInfo }: CityCardProps): JSX.Element {
   const {
     id,
     title,
@@ -65,4 +65,4 @@ function CityCard({ cardInfo }: CityCardProps): JSX.Element {
   );
 }
 
-export default CityCard;
+export default OfferCard;

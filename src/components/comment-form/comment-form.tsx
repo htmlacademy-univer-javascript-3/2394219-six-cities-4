@@ -11,19 +11,14 @@ function CommentForm() {
     comment: '',
   });
 
-  const handleCommentChange = (e: SyntheticEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = (e: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const fieldName = e.currentTarget.name;
+    const value = e.currentTarget.value;
+
     setFormState((prevState) => ({
       ...prevState,
-      comment: e.currentTarget.value,
+      [fieldName]: value,
     }));
-  };
-
-  const handleRatingChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      rating: e.currentTarget.value,
-    }));
-
   };
 
   return (
@@ -38,7 +33,7 @@ function CommentForm() {
           value="5"
           id="5-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={handleInputChange}
           checked={formState.rating === '5'}
         />
         <label
@@ -57,7 +52,7 @@ function CommentForm() {
           value="4"
           id="4-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={handleInputChange}
           checked={formState.rating === '4'}
         />
         <label
@@ -76,7 +71,7 @@ function CommentForm() {
           value="3"
           id="3-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={handleInputChange}
           checked={formState.rating === '3'}
         />
         <label
@@ -95,7 +90,7 @@ function CommentForm() {
           value="2"
           id="2-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={handleInputChange}
           checked={formState.rating === '2'}
         />
         <label
@@ -114,7 +109,7 @@ function CommentForm() {
           value="1"
           id="1-star"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={handleInputChange}
           checked={formState.rating === '1'}
         />
         <label
@@ -132,7 +127,7 @@ function CommentForm() {
         id="review"
         name="review"
         value={formState.comment}
-        onChange={handleCommentChange}
+        onChange={handleInputChange}
         placeholder="Tell how was your stay, what you like and what can be improved"
       />
       <div className="reviews__button-wrapper">

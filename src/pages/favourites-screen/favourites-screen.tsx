@@ -61,14 +61,17 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {Object.keys(favouritesMap).map((city) => (
-                <FavouritesCityBlock
-                  city={city}
-                  places={favouritesMap[city]}
-                  // поправить индексацию
-                  key={favouritesMap[city][0].id}
-                />
-              ))}
+              {Object.keys(favouritesMap).length > 0 ? (
+                Object.keys(favouritesMap).map((city) => (
+                  <FavouritesCityBlock
+                    city={city}
+                    places={favouritesMap[city]}
+                    key={favouritesMap[city][0].id}
+                  />
+                ))
+              ) : (
+                <p>No favourite cities added yet.</p>
+              )}
             </ul>
           </section>
         </div>
