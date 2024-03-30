@@ -3,11 +3,11 @@ import CityCardList from '../../components/offers-card-list/offers-card-list';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
-  placesCount: number;
   offers: Offer[];
 }
 
-function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
+  const favourites = offers.filter((o) => o.isFavorite);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -36,7 +36,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                       Oliver.conner@gmail.com
                     </span>
                     <Link to="/favourites">
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favourites.length}</span>
                     </Link>
                   </a>
                 </li>
@@ -93,7 +93,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${placesCount} places to stay in Amsterdam`}</b>
+              <b className="places__found">{`${offers.length} places to stay in Amsterdam`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

@@ -42,7 +42,7 @@ function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favourites.length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">

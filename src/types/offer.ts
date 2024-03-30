@@ -1,3 +1,5 @@
+import { Review } from './review';
+
 export type Location = {
   latitude: number;
   longitude: number;
@@ -20,4 +22,7 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
+  photos: string[];
+  description: string;
+  reviews: Review[];
 }
