@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import CitiesMap from '../../components/cities-map/cities-map';
 import CityCardList from '../../components/offers-card-list/offers-card-list';
 import { Offer } from '../../types/offer';
 
@@ -123,7 +124,9 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <CityCardList cities={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <CitiesMap city={offers[0].city} points={offers} />
+              </section>
             </div>
           </div>
         </div>
