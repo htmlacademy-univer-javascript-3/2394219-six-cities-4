@@ -1,6 +1,9 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { SendReviewForm } from './SendReviewForm';
+import ReviewList from '../../components/review-list/review-list';
+import CitiesMap from '../../components/cities-map/cities-map';
+import CityCardList from '../../components/offers-card-list/offers-card-list';
 
 type OfferPageProps = {
   offers: Offer[];
@@ -153,44 +156,19 @@ function OfferScreen({offers}: OfferPageProps): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerInfo.reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {offerInfo.reviews.map((review) => (
-                    <li key={review.id} className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt={review.user.avatarUrl} />
-                        </div>
-                        <span className="reviews__user-name">
-                          {review.user.name}
-                        </span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{width: `${review.rating * 20}%`}}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">
-                          {review.comment}
-                        </p>
-                        <time className="reviews__time" dateTime={review.date.toISOString()}>{review.date.getMonth()} {review.date.getFullYear()}</time>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <ReviewList reviews={offerInfo.reviews} />
                 <SendReviewForm />
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <section className="offer__map map">
+            <CitiesMap city={offerInfo.city} points={offers.filter((e) => e.id !== offerInfo.id)} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-
-            </div>
+            <CityCardList cities={offers.filter((e) => e.id !== offerInfo.id)} />
           </section>
         </div>
       </main>
