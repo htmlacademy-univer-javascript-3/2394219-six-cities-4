@@ -1,11 +1,10 @@
 import { Review } from '../../types/review';
-import ReviewItem from '../review/review';
+import ReviewItem from '../review-item/review-item';
 
-type ReviewListProps = {
+type ReviewsListProps = {
   reviews: Review[];
-}
-
-function ReviewList({reviews}: ReviewListProps): JSX.Element {
+};
+function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
   return (
     <ul className="reviews__list">
       {reviews.map((review) => (
@@ -15,4 +14,4 @@ function ReviewList({reviews}: ReviewListProps): JSX.Element {
   );
 }
 
-export default ReviewList;
+export default ReviewsList;
