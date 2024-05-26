@@ -1,23 +1,28 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 
+import { getRating } from '../../utils';
+
 type CityCardProps = {
   cardInfo: Offer;
+  typeClassName: string;
 };
 
-function OfferCard({ cardInfo }: CityCardProps): JSX.Element {
+function CityCard({ cardInfo, typeClassName }: CityCardProps): JSX.Element {
   const {
     id,
     title,
     type,
     price,
+    // city,
+    // location,
     isFavorite,
     isPremium,
     rating,
     previewImage,
   } = cardInfo;
   return (
-    <article className="cities__card place-card">
+    <article className={`${typeClassName} place-card`}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -52,7 +57,7 @@ function OfferCard({ cardInfo }: CityCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${(rating / 5) * 100}%` }}></span>
+            <span style={{ width: getRating(rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -65,4 +70,4 @@ function OfferCard({ cardInfo }: CityCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default CityCard;
