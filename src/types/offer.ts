@@ -1,15 +1,21 @@
-import { Review } from './review';
+import { CityName } from '../const';
 
 export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
-}
+};
 
 export type City = {
-  name: string;
+  name: CityName;
   location: Location;
-}
+};
+
+type Host = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+};
 
 export type Offer = {
   id: string;
@@ -22,7 +28,13 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
-  photos: string[];
+};
+
+export type ExtendedOffer = Omit<Offer, 'previewImage'> & {
   description: string;
-  reviews: Review[];
-}
+  bedrooms: number;
+  goods: string[];
+  host: Host;
+  maxAdults: number;
+  images: string[];
+};

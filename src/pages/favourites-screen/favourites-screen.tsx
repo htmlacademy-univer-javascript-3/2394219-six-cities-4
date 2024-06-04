@@ -1,94 +1,33 @@
-import { Offer } from '../../types/offer';
-import FavouritesCityBlock from '../../components/favourites-city-block/favourites-city-block';
-import { Link } from 'react-router-dom';
+import cn from 'classnames';
+import { getFavorites, getIsFavoritesLoading } from '../../store';
+import { useAppSelector } from '../../hooks';
+import Loader from '../../components/loader/loader';
+import EmptyFavorites from '../../components/empty-favourites/empty-favourites';
+import Favourites from '../../components/favourites/favourites';
 
-type FavoutitesScreenProps = {
-  favourites: Offer[];
-};
+function FavoutitesScreen(): JSX.Element {
+  const isFavouritesLoading = useAppSelector(getIsFavoritesLoading);
+  const favorites = useAppSelector(getFavorites);
+  const isEmptyFavorites = favorites.length === 0;
 
-function FavoutitesScreen({ favourites }: FavoutitesScreenProps): JSX.Element {
-  const favouritesMap = favourites.reduce(
-    (acc: Record<string, Offer[]>, place: Offer) => {
-      const city = place.city.name;
-      acc[city] = [...(acc[city] ?? []), place];
-      return acc;
-    },
-    {}
-  );
+  if (isFavouritesLoading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link to='/' className="header__logo-link" >
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">{favourites.length}</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {Object.keys(favouritesMap).length > 0 ? (
-                Object.keys(favouritesMap).map((city) => (
-                  <FavouritesCityBlock
-                    city={city}
-                    places={favouritesMap[city]}
-                    key={favouritesMap[city][0].id}
-                  />
-                ))
-              ) : (
-                <p>No favourite cities added yet.</p>
-              )}
-            </ul>
-          </section>
-        </div>
-      </main>
-
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img
-            className="footer__logo"
-            src="img/logo.svg"
-            alt="6 cities logo"
-            width="64"
-            height="33"
-          />
-        </a>
-      </footer>
-    </div>
+    <main
+      className={cn('page__main page__main--favorites', {
+        'page__main--favorites-empty': isEmptyFavorites,
+      })}
+    >
+      <div className="page__favorites-container container">
+        {isEmptyFavorites ? (
+          <EmptyFavorites />
+        ) : (
+          <Favourites favorites={favorites} />
+        )}
+      </div>
+    </main>
   );
 }
 

@@ -1,43 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainScreen from '../../pages/main-screen/main-screen';
-import LoginScreen from '../../pages/login-screen/login-screen';
-import FavoutitesScreen from '../../pages/favourites-screen/favourites-screen';
-import OfferScreen from '../../pages/offer-screen/offer-screen';
+import {
+  checkAuthAction,
+  fetchOffersAction,
+  getHasError,
+  getIsOffersLoading,
+  store,
+} from '../../store';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import { Offer } from '../../types/offer';
+import AppRoutes from '../app-routes/app-routes';
 
-type AppComponentProps = {
-  offers: Offer[];
-};
+import { useFetchFavorites } from './hooks';
 
-function App({ offers }: AppComponentProps): JSX.Element {
-  const favourites = offers.filter((o) => o.isFavorite);
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={'/'}
-          element={<MainScreen offers = {offers} />}
-        />
-        <Route
-          path={'/login'}
-          element={<LoginScreen/>}
-        />
-        <Route
-          path={'/favourites'}
-          element={<FavoutitesScreen favourites={favourites}/>}
-        />
-        <Route
-          path={'/offer/:id'}
-          element={<OfferScreen offers={offers} />}
-        />
-        <Route
-          path="*"
-          element={<ErrorScreen/>}
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersAction());
+
+function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector(getIsOffersLoading);
+  const hasError = useAppSelector(getHasError);
+
+  useFetchFavorites();
+
+  if (isOffersDataLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (hasError) {
+    return <ErrorScreen />;
+  }
+
+  return <AppRoutes />;
 }
 
 export default App;
