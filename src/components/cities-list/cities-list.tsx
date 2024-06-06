@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { CityName } from '../../const';
 import { changeCity } from '../../store';
 import { useAppDispatch } from '../../hooks';
+import { Link } from 'react-router-dom';
 import { memo } from 'react';
 
 type CitiesListProps = {
@@ -34,16 +35,15 @@ function CitiesList({ selectedCity }: CitiesListProps): JSX.Element {
         <ul className="locations__list tabs__list">
           {cities.map((city) => (
             <li key={city} className="locations__item">
-              <a
+              <Link to="#"
                 className={cn('locations__item-link', 'tabs__item', {
                   'tabs__item--active': selectedCity === city,
                 })}
-                href="#"
                 data-testid={city}
                 onClick={(evt) => handleCityChange(evt, city)}
               >
                 <span>{city}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
