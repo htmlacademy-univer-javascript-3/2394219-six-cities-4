@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { changeCity, getIsSubmittingLogin, loginAction } from '../../store';
-import { useNavigate } from 'react-router-dom';
 import { Routes, CityName } from '../../const';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
@@ -27,7 +27,6 @@ function getRandomElementFromArray<T>(arr: T[]) {
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -104,16 +103,15 @@ function LoginScreen(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a
+            <Link to={Routes.Main}
               className="locations__item-link"
               onClick={(evt) => {
                 evt.preventDefault();
-                navigate(Routes.Main);
                 dispatch(changeCity(city));
               }}
             >
               <span>{city}</span>
-            </a>
+            </Link>
           </div>
         </section>
       </div>
